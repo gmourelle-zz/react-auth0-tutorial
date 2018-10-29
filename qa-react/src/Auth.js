@@ -12,7 +12,7 @@ class Auth {
       scope: 'openid profile'
     });
 
-    this.getProfile = this.getProfile.bind(this);
+    //this.getProfile = this.getProfile.bind(this);
     //this.handleAuthentication = this.handleAuthentication.bind(this);
     // this.isAuthenticated = this.isAuthenticated.bind(this);
     // this.signIn = this.signIn.bind(this);
@@ -58,7 +58,7 @@ class Auth {
   signOut = () => {
     this.auth0.logout({
       returnTo: 'http://localhost:3000',
-      clientID: '<YOUR_AUTH0_CLIENT_ID>'
+      clientID: 'hYMHgjDeleYsF2et0L94x84w4en6tto9'
     });
   };
 
