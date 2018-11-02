@@ -1,50 +1,32 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import SubmitAnswer from './SubmitAnswer';
-import auth0Client from '../Auth';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getQuestion } from '../store/reducers/selector';
+import { fetchQuestion, submitAnswer } from '../store/actions/question';
 
 class Question extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      question: null
-    };
-
-    this.submitAnswer = this.submitAnswer.bind(this);
+  componentDidMount() {
+    this.fetchQuestion();
   }
 
-  async componentDidMount() {
-    await this.refreshQuestion();
-  }
-
-  async refreshQuestion() {
+  fetchQuestion = () => {
     const {
       match: { params }
     } = this.props;
-    const question = (await axios.get(
-      `http://localhost:8081/${params.questionId}`
-    )).data;
-    this.setState({
-      question
-    });
-  }
+    this.props.fetchQuestion(params.questionId);
+  };
 
-  async submitAnswer(answer) {
-    await axios.post(
-      `http://localhost:8081/answer/${this.state.question.id}`,
-      {
-        answer
-      },
-      {
-        headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
-      }
-    );
-    await this.refreshQuestion();
-  }
+  submitAnswer = (questionId, answer) => {
+    return this.props.submitAnswer(questionId, answer).then(r => {
+      this.fetchQuestion(questionId);
+    });
+  };
 
   render() {
-    const { question } = this.state;
-    if (question === null) return <p>Loading ...</p>;
+    const { question } = this.props;
+
+    if (!question) return <p>Loading ...</p>;
     return (
       <div className="container">
         <div className="row">
@@ -69,4 +51,22 @@ class Question extends Component {
   }
 }
 
-export default Question;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchQuestion,
+      submitAnswer
+    },
+    dispatch
+  );
+
+const mapStateToProps = state => ({
+  question: getQuestion(state)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Question);
+
+//export default Question;

@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getQuestions } from '../store/reducers/selector';
+import { fetchQuestions } from '../store/actions/questions';
 
 class Questions extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      questions: null
-    };
-  }
-
-  async componentDidMount() {
-    const questions = (await axios.get('http://localhost:8081/')).data;
-    this.setState({
-      questions
-    });
+  componentDidMount() {
+    this.props.fetchQuestions();
   }
 
   render() {
+    const { questions } = this.props;
+
     return (
       <div className="container">
         <div className="row">
@@ -31,9 +25,9 @@ class Questions extends Component {
               </div>
             </div>
           </Link>
-          {this.state.questions === null && <p>Loading questions...</p>}
-          {this.state.questions &&
-            this.state.questions.map(question => (
+          {!questions && <p>Loading questions...</p>}
+          {questions &&
+            questions.map(question => (
               <div key={question.id} className="col-sm-12 col-md-4 col-lg-3">
                 <Link to={`/question/${question.id}`}>
                   <div className="card text-white bg-success mb-3">
@@ -54,4 +48,21 @@ class Questions extends Component {
   }
 }
 
-export default Questions;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchQuestions
+    },
+    dispatch
+  );
+
+const mapStateToProps = state => ({
+  questions: getQuestions(state)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Questions);
+
+//export default Questions;

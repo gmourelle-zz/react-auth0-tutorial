@@ -21,7 +21,7 @@ class SubmitAnswer extends Component {
   };
 
   submit = () => {
-    this.props.submitAnswer(this.state.answer);
+    this.props.submitAnswer(this.props.questionId, this.state.answer);
 
     this.setState({
       answer: ''
