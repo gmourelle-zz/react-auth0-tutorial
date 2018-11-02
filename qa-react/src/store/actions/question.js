@@ -18,11 +18,11 @@ const getError = payload => ({
   payload: payload
 });
 
-export const submitAnswerSuccess = () => ({
-  type: Actions.SUBMIT_ANSWER_SUCCESS
+export const submitAnswerSuccess = (payload) => ({
+  type: Actions.SUBMIT_ANSWER_SUCCESS,
+  payload
 });
 
-const urlQuestion = 'http://localhost:8081/';
 
 export const fetchQuestion = questionId => {
   return dispatch => {
@@ -49,7 +49,7 @@ export const submitAnswer = (questionId, answer) => {
           headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
         }
       )
-      .then(dispatch(submitAnswerSuccess()))
+      .then(question_data =>dispatch(submitAnswerSuccess(question_data.data.question)))
       .catch(err => getError(err));
   };
 };

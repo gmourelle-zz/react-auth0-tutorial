@@ -39,7 +39,7 @@ class Question extends Component {
               submitAnswer={this.submitAnswer}
             />
             <p>Answers:</p>
-            {question.answers.map((answer, idx) => (
+            {question.answers && question.answers.map((answer, idx) => (
               <p className="lead" key={idx}>
                 {answer.answer}
               </p>

@@ -1,4 +1,4 @@
-import { Actions } from '../constants/actionTypes';
+  import { Actions } from '../constants/actionTypes';
 
 export const getQuestionsSuccess = payload => ({
   type: Actions.GET_QUESTIONS_SUCCESS,
@@ -13,8 +13,8 @@ export const filterPlayers = payload => ({
   payload: payload
 });
 
-const getPlayerError = payload => ({
-  type: Actions.GET_PLAYERS_ERROR,
+const getError = payload => ({
+  type: Actions.RAISE_ERROR,
   payload: payload
 });
 
@@ -28,6 +28,6 @@ export const fetchQuestions = () => {
       .then(question_data => {
         dispatch(getQuestionsSuccess(question_data));
       })
-      .catch(err => getPlayerError(err));
+      .catch(err => getError(err));
   };
 };
