@@ -64,5 +64,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Questions);
-
-//export default Questions;

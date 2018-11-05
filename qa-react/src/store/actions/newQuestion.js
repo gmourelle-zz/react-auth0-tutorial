@@ -6,21 +6,23 @@ export const getQuestionSuccess = payload => ({
   type: Actions.GET_QUESTION_SUCCESS,
   payload
 });
+
 export const getQuestionRequest = () => ({
   type: Actions.GET_QUESTION_REQUEST
 });
 
-export const submitAnswerRequest = () => ({
-  type: Actions.SUBMIT_ANSWER_REQUEST
+export const submitNewQuestionRequest = () => ({
+  type: Actions.SUBMIT_NEW_QUESTION_REQUEST
 });
+
+export const submitNewQuestionSuccess = payload => ({
+  type: Actions.SUBMIT_NEW_QUESTION_SUCCESS,
+  payload
+});
+
 const getError = payload => ({
   type: Actions.RAISE_ERROR,
   payload: payload
-});
-
-export const submitAnswerSuccess = payload => ({
-  type: Actions.SUBMIT_ANSWER_SUCCESS,
-  payload
 });
 
 export const fetchQuestion = questionId => {
@@ -35,7 +37,7 @@ export const fetchQuestion = questionId => {
   };
 };
 
-export const submitAnswer = (questionId, answer) => {
+export const submitNewQuestion = (title, description) => {
   // return dispatch => {
   //   dispatch(submitAnswerRequest());
 
@@ -53,19 +55,20 @@ export const submitAnswer = (questionId, answer) => {
   //     .catch(err => getError(err));
   // };
   return dispatch => {
-    dispatch(submitAnswerRequest());
+    dispatch(submitNewQuestionRequest());
     return axios
       .post(
-        `http://localhost:8081/answer/${questionId}`,
+        `http://localhost:8081`,
         {
-          answer
+          title,
+          description
         },
         {
           headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
         }
       )
       .then(question_data =>
-        dispatch(submitAnswerSuccess(question_data.data.question))
+        dispatch(submitNewQuestionSuccess(question_data.data))
       )
       .catch(err => getError(err));
   };

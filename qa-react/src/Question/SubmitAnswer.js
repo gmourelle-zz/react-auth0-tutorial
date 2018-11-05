@@ -1,23 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
-import auth0Client from '../Auth';
+import auth0Client from '../Auth/Auth';
 
 class SubmitAnswer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      answer: ''
-    };
-  }
+  state = {
+    answer: ''
+  };
 
-  // updateAnswer = value => {
-  //   this.setState({
-  //     answer: value
-  //   });
-  // };
-
-  updateAnswer = (inputValue, event) => {
-    this.setState({ [inputValue]: event.target.value });
+  updateAnswer = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   submit = () => {
@@ -36,7 +27,8 @@ class SubmitAnswer extends Component {
           <label htmlFor="exampleInputEmail1">Answer:</label>
           <input
             type="text"
-            onChange={e => this.updateAnswer('answer', e)}
+            name="answer"
+            onChange={this.updateAnswer}
             className="form-control"
             placeholder="Share your answer."
             value={this.state.answer}

@@ -18,9 +18,7 @@ class Question extends Component {
   };
 
   submitAnswer = (questionId, answer) => {
-    return this.props.submitAnswer(questionId, answer).then(r => {
-      this.fetchQuestion(questionId);
-    });
+    return this.props.submitAnswer(questionId, answer);
   };
 
   render() {
@@ -39,11 +37,12 @@ class Question extends Component {
               submitAnswer={this.submitAnswer}
             />
             <p>Answers:</p>
-            {question.answers && question.answers.map((answer, idx) => (
-              <p className="lead" key={idx}>
-                {answer.answer}
-              </p>
-            ))}
+            {question.answers &&
+              question.answers.map((answer, idx) => (
+                <p className="lead" key={idx}>
+                  {answer.answer}
+                </p>
+              ))}
           </div>
         </div>
       </div>
@@ -68,5 +67,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Question);
-
-//export default Question;

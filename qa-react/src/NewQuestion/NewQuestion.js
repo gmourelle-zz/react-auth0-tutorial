@@ -1,49 +1,35 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import auth0Client from '../Auth';
-import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { submitNewQuestion } from '../store/actions/newQuestion';
 
 class NewQuestion extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    disabled: false,
+    title: '',
+    description: ''
+  };
 
-    this.state = {
-      disabled: false,
-      title: '',
-      description: ''
-    };
-  }
-
-  updateDescription = value => {
+  updateDescription = e => {
     this.setState({
-      description: value
+      [e.target.name]: e.target.value
     });
   };
 
-  updateTitle = value => {
+  updateTitle = e => {
     this.setState({
-      title: value
+      [e.target.name]: e.target.value
     });
   };
 
-  async submit() {
+  submit = () => {
     this.setState({
       disabled: true
     });
-
-    await axios.post(
-      'http://localhost:8081',
-      {
-        title: this.state.title,
-        description: this.state.description
-      },
-      {
-        headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
-      }
-    );
-
+    this.props.submitNewQuestion(this.state.title, this.state.description);
     this.props.history.push('/');
-  }
+  };
 
   render() {
     return (
@@ -54,35 +40,33 @@ class NewQuestion extends Component {
               <div className="card-header">New Question</div>
               <div className="card-body text-left">
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Title:</label>
+                  <label>Title:</label>
                   <input
                     disabled={this.state.disabled}
                     type="text"
-                    onBlur={e => {
-                      this.updateTitle(e.target.value);
-                    }}
+                    name="title"
+                    onChange={this.updateTitle}
                     className="form-control"
                     placeholder="Give your question a title."
+                    value={this.state.title}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Description:</label>
+                  <label>Description:</label>
                   <input
                     disabled={this.state.disabled}
                     type="text"
-                    onBlur={e => {
-                      this.updateDescription(e.target.value);
-                    }}
+                    name="description"
+                    onChange={this.updateDescription}
                     className="form-control"
                     placeholder="Give more context to your question."
+                    value={this.state.description}
                   />
                 </div>
                 <button
                   disabled={this.state.disabled}
                   className="btn btn-primary"
-                  onClick={() => {
-                    this.submit();
-                  }}
+                  onClick={this.submit}
                 >
                   Submit
                 </button>
@@ -95,4 +79,17 @@ class NewQuestion extends Component {
   }
 }
 
-export default withRouter(NewQuestion);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      submitNewQuestion
+    },
+    dispatch
+  );
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(NewQuestion)
+);
