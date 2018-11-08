@@ -1,6 +1,5 @@
 import { Actions } from '../constants/actionTypes';
 import auth0Client from '../../Auth/Auth';
-import axios from 'axios';
 
 export const signOutSuccess = () => ({
   type: Actions.SIGN_OUT_SUCCESS

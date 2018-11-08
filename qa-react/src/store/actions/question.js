@@ -1,6 +1,5 @@
 import { Actions } from '../constants/actionTypes';
-import auth0Client from '../../Auth/Auth';
-import axios from 'axios';
+import { postAnswer } from './../../services';
 
 export const getQuestionSuccess = payload => ({
   type: Actions.GET_QUESTION_SUCCESS,
@@ -23,50 +22,14 @@ export const submitAnswerSuccess = payload => ({
   payload
 });
 
-export const fetchQuestion = questionId => {
-  return dispatch => {
-    dispatch(getQuestionRequest());
-    return fetch(`http://localhost:8081/${questionId}`)
-      .then(data => data.json())
-      .then(question_data => {
-        dispatch(getQuestionSuccess(question_data));
-      })
-      .catch(err => getError(err));
-  };
-};
-
 export const submitAnswer = (questionId, answer) => {
-  // return dispatch => {
-  //   dispatch(submitAnswerRequest());
-
-  //   return fetch(`http://localhost:8081/answer/${questionId}`, {
-  //     method: 'POST',
-  //     body: JSON.stringify(answer),
-  //     headers: new Headers({
-  //       'Content-type': 'application/json',
-  //       Authorization: `Bearer ${auth0Client.getIdToken()}`
-  //     })
-  //   })
-  //     .then(question_data =>
-  //       dispatch(submitAnswerSuccess(question_data.data.question))
-  //     )
-  //     .catch(err => getError(err));
-  // };
   return dispatch => {
     dispatch(submitAnswerRequest());
-    return axios
-      .post(
-        `http://localhost:8081/answer/${questionId}`,
-        {
-          answer
-        },
-        {
-          headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
-        }
-      )
-      .then(question_data =>
-        dispatch(submitAnswerSuccess(question_data.data.question))
-      )
-      .catch(err => getError(err));
+    postAnswer(questionId, answer).then(
+      answer_data => dispatch(submitAnswerSuccess(answer_data)),
+      error => {
+        dispatch(getError(error));
+      }
+    );
   };
 };

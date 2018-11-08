@@ -1,0 +1,55 @@
+import auth0Client from '../Auth/Auth';
+import axios from 'axios';
+
+const urlQuestions = process.env.REACT_APP_DB_API;
+
+export const getQuestions = () =>
+  fetch(urlQuestions)
+    .then(data => data.json())
+    .then(question_data => question_data)
+    .catch(err => err);
+
+export const postNewQuestion = (title, description) =>
+  axios
+    .post(
+      urlQuestions,
+      {
+        title,
+        description
+      },
+      {
+        headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
+      }
+    )
+    .then(question_data => question_data.data.question)
+    .catch(err => err);
+// return dispatch => {
+//   dispatch(submitAnswerRequest());
+
+//   return fetch(`http://localhost:8081/answer/${questionId}`, {
+//     method: 'POST',
+//     body: JSON.stringify(answer),
+//     headers: new Headers({
+//       'Content-type': 'application/json',
+//       Authorization: `Bearer ${auth0Client.getIdToken()}`
+//     })
+//   })
+//     .then(question_data =>
+//       dispatch(submitAnswerSuccess(question_data.data.question))
+//     )
+//     .catch(err => getError(err));
+// };
+
+export const postAnswer = (questionId, answer) =>
+  axios
+    .post(
+      `${urlQuestions}answer/${questionId}`,
+      {
+        answer
+      },
+      {
+        headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
+      }
+    )
+    .then(question_data => question_data.data.question)
+    .catch(err => err);
