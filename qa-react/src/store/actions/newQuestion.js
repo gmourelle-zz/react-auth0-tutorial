@@ -25,19 +25,7 @@ const getError = payload => ({
   payload: payload
 });
 
-export const fetchQuestion = questionId => {
-  return dispatch => {
-    dispatch(getQuestionRequest());
-    return fetch(`http://localhost:8081/${questionId}`)
-      .then(data => data.json())
-      .then(question_data => {
-        dispatch(getQuestionSuccess(question_data));
-      })
-      .catch(err => getError(err));
-  };
-};
-
-export const submitNewQuestion = (title, description) => {
+export const submitNewQuestion = (title, description, history) => {
   // return dispatch => {
   //   dispatch(submitAnswerRequest());
 
@@ -67,8 +55,10 @@ export const submitNewQuestion = (title, description) => {
           headers: { Authorization: `Bearer ${auth0Client.getIdToken()}` }
         }
       )
-      .then(question_data =>
-        dispatch(submitNewQuestionSuccess(question_data.data))
+      .then(
+        question_data =>
+          dispatch(submitNewQuestionSuccess(question_data.data.question)),
+        history.push('/')
       )
       .catch(err => getError(err));
   };

@@ -27,8 +27,12 @@ class NewQuestion extends Component {
     this.setState({
       disabled: true
     });
-    this.props.submitNewQuestion(this.state.title, this.state.description);
-    this.props.history.push('/');
+    this.props.submitNewQuestion(
+      this.state.title,
+      this.state.description,
+      this.props.history
+    );
+    //.then(r => this.props.history.push('/'));
   };
 
   render() {

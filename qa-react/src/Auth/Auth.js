@@ -1,22 +1,14 @@
 import auth0 from 'auth0-js';
-
 class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      // the following three lines MUST be updated
-      domain: 'gmourelle.auth0.com',
-      audience: 'https://gmourelle.auth0.com/userinfo',
-      clientID: 'hYMHgjDeleYsF2et0L94x84w4en6tto9',
-      redirectUri: 'http://localhost:3000/callback',
+      domain: process.env.REACT_APP_DOMAIN,
+      audience: process.env.REACT_APP_AUDIENCE,
+      clientID: process.env.REACT_APP_ID,
+      redirectUri: process.env.REACT_APP_CALLBACK,
       responseType: 'token id_token',
       scope: 'openid profile'
     });
-
-    //this.getProfile = this.getProfile.bind(this);
-    //this.handleAuthentication = this.handleAuthentication.bind(this);
-    // this.isAuthenticated = this.isAuthenticated.bind(this);
-    // this.signIn = this.signIn.bind(this);
-    // this.signOut = this.signOut.bind(this);
   }
 
   getProfile = () => {
@@ -57,8 +49,8 @@ class Auth {
 
   signOut = () => {
     this.auth0.logout({
-      returnTo: 'http://localhost:3000',
-      clientID: 'hYMHgjDeleYsF2et0L94x84w4en6tto9'
+      returnTo: process.env.REACT_APP_API,
+      clientID: process.env.REACT_APP_ID
     });
   };
 

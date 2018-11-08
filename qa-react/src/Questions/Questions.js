@@ -12,7 +12,6 @@ class Questions extends Component {
 
   render() {
     const { questions } = this.props;
-
     return (
       <div className="container">
         <div className="row">
@@ -32,7 +31,7 @@ class Questions extends Component {
                 <Link to={`/question/${question.id}`}>
                   <div className="card text-white bg-success mb-3">
                     <div className="card-header">
-                      Answers: {question.answers}
+                      Answers: {question.answers.length}
                     </div>
                     <div className="card-body">
                       <h4 className="card-title">{question.title}</h4>
@@ -58,6 +57,8 @@ const mapDispatchToProps = dispatch =>
 
 const mapStateToProps = state => ({
   questions: getQuestions(state)
+
+  //questions: []
 });
 
 export default connect(

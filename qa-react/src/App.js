@@ -14,10 +14,10 @@ class App extends Component {
     this.state = {
       checkingSession: true
     };
+
+    //checkingSession que lo reciba por prop?
   }
   async componentDidMount() {
-    //if (this.props.location.pathname === '/callback') return;
-
     if (this.props.location.pathname === '/callback') {
       this.setState({ checkingSession: false });
       return;

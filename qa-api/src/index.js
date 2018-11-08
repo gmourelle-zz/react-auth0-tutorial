@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
     id: q.id,
     title: q.title,
     description: q.description,
-    answers: q.answers.length
+    answers: q.answers
   }));
   res.send(qs);
 });
@@ -68,7 +68,7 @@ app.post('/', checkJwt, (req, res) => {
     author: req.user.nickname
   };
   questions.push(newQuestion);
-  res.status(200).send();
+  res.status(200).send({ question: newQuestion });
 });
 
 // insert a new answer to a question
@@ -83,17 +83,10 @@ app.post('/answer/:id', checkJwt, (req, res) => {
     author: req.user.nickname
   });
 
-  const questionResponse = {
-    id: question[0].id,
-    title: question[0].title,
-    description: question[0].description,
-    answers: question[0].answers
-  };
-  res.status(200).send({question});
+  res.status(200).send({ question: question[0] });
 });
 
 // start the server
 app.listen(8081, () => {
   console.log('listening on port 8081');
 });
-

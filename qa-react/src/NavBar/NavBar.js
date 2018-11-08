@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import auth0Client from '../Auth/Auth';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { signOut } from '../store/actions/user';
 
 const NavBar = props => {
   const signOut = () => {
-    auth0Client.signOut();
-    props.history.replace('/');
+    //auth0Client.signOut();
+    props.signOut(props.history);
+    //props.history.replace('/');
   };
 
   return (
@@ -23,12 +27,7 @@ const NavBar = props => {
           <label className="mr-2 text-white">
             {auth0Client.getProfile().name}
           </label>
-          <button
-            className="btn btn-dark"
-            onClick={() => {
-              signOut();
-            }}
-          >
+          <button className="btn btn-dark" onClick={signOut}>
             Sign Out
           </button>
         </div>
@@ -37,4 +36,17 @@ const NavBar = props => {
   );
 };
 
-export default withRouter(NavBar);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      signOut
+    },
+    dispatch
+  );
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(NavBar)
+);
