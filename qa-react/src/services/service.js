@@ -1,4 +1,4 @@
-import auth0Client from '../Auth/Auth';
+import auth0Client from '../Auth';
 import axios from 'axios';
 
 const urlQuestions = process.env.REACT_APP_DB_API;

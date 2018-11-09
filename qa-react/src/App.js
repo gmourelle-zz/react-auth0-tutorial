@@ -3,10 +3,10 @@ import { Route, withRouter } from 'react-router-dom';
 import NavBar from './NavBar/NavBar';
 import Question from './Question/Question';
 import Questions from './Questions/Questions';
-import Callback from './Callback/Callback';
+import Callback from './Callback';
 import NewQuestion from './NewQuestion/NewQuestion';
 import SecuredRoute from './SecuredRoute/SecuredRoute';
-import auth0Client from './Auth/Auth';
+import auth0Client from './Auth';
 
 class App extends Component {
   constructor(props) {

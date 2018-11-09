@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import auth0Client from '../Auth/Auth';
+import auth0Client from '../Auth';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { signOut } from '../store/actions/user';
 
 const NavBar = props => {
   const signOut = () => {
-    //auth0Client.signOut();
     props.signOut(props.history);
-    //props.history.replace('/');
   };
 
   return (
