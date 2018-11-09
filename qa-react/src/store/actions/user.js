@@ -2,7 +2,10 @@ import { Actions } from '../constants/actionTypes';
 import auth0Client from '../../Auth';
 
 export const signOutSuccess = () => ({
-  type: Actions.SIGN_OUT_SUCCESS
+  type: Actions.CHECKING_SESSION
+});
+export const checkingSessionRequest = () => ({
+  type: Actions.CHECKING_SESSION
 });
 
 export const signOutRequest = () => ({
@@ -14,7 +17,7 @@ export const submitNewQuestionRequest = () => ({
 });
 
 export const submitNewQuestionSuccess = payload => ({
-  type: Actions.SUBMIT_NEW_QUESTION_SUCCESS,
+  type: Actions.CHECKING_SESSION,
   payload
 });
 
@@ -23,7 +26,6 @@ const getError = payload => ({
   payload: payload
 });
 
-export const checkingSession = () => {};
 export const signIn = () => {};
 export const signOut = history => {
   return dispatch => {
