@@ -53,3 +53,10 @@ export const postAnswer = (questionId, answer) =>
     )
     .then(question_data => question_data.data.question)
     .catch(err => err);
+//componentdidcatch
+//el catch en los actions
+//componentdidmount en Question.js y actualizar el mismo questionsss en el store
+//hacer REST la api. Ver de poder editar las respuestas para hacerle .put en la api
+//iba a usar un HOC para algo. Para el manejo de errores?
+//similar a statusAgent, si hay un error, que wrappe el component o lo que tiene que mostrar
+

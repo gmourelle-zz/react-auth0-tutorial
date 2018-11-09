@@ -6,6 +6,10 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
+
+//aca pones las variables para no hardcodear 
+//la data de Auth0
+dotenv.config()
 // define the Express app
 const app = express();
 

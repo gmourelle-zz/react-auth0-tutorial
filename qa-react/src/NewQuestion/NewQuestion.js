@@ -83,17 +83,10 @@ class NewQuestion extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      submitNewQuestion
-    },
-    dispatch
-  );
 
 export default withRouter(
   connect(
     null,
-    mapDispatchToProps
+    {submitNewQuestion}
   )(NewQuestion)
 );

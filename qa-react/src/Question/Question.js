@@ -6,6 +6,8 @@ import { getQuestion } from '../store/reducers/selector';
 import { submitAnswer } from '../store/actions/question';
 
 class Question extends Component {
+
+  componentDidMount
   submitAnswer = (questionId, answer) => {
     return this.props.submitAnswer(questionId, answer);
   };
