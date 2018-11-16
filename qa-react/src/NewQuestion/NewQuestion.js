@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { submitNewQuestion } from '../store/actions/newQuestion';
 
@@ -83,10 +82,9 @@ class NewQuestion extends Component {
   }
 }
 
-
 export default withRouter(
   connect(
     null,
-    {submitNewQuestion}
+    { submitNewQuestion }
   )(NewQuestion)
 );

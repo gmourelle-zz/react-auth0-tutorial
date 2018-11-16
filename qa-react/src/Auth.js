@@ -9,16 +9,6 @@ class Auth {
       responseType: 'token id_token',
       scope: 'openid profile'
     });
-
-    // this.auth0 = new auth0.WebAuth({
-    //   // the following three lines MUST be updated
-    //   domain: 'gmourelle.auth0.com',
-    //   audience: 'https://gmourelle.auth0.com/userinfo',
-    //   clientID: 'hYMHgjDeleYsF2et0L94x84w4en6tto9',
-    //   redirectUri: 'http://localhost:3000/callback',
-    //   responseType: 'token id_token',
-    //   scope: 'openid profile'
-    // });
   }
 
   getProfile = () => {
@@ -63,12 +53,6 @@ class Auth {
       clientID: process.env.REACT_APP_ID
     });
   };
-  // signOut = () => {
-  //   this.auth0.logout({
-  //     returnTo: 'http://localhost:3000',
-  //     clientID: '<YOUR_AUTH0_CLIENT_ID>'
-  //   });
-  // };
 
   silentAuth = () => {
     return new Promise((resolve, reject) => {

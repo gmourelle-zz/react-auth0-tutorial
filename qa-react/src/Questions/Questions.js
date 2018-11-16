@@ -57,8 +57,6 @@ const mapDispatchToProps = dispatch =>
 
 const mapStateToProps = state => ({
   questions: getQuestions(state)
-
-  //questions: []
 });
 
 export default connect(

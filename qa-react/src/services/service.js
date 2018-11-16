@@ -9,6 +9,12 @@ export const getQuestions = () =>
     .then(question_data => question_data)
     .catch(err => err);
 
+export const getQuestion = id =>
+  fetch(`${urlQuestions}${id}`)
+    .then(data => data.json())
+    .then(question_data => question_data)
+    .catch(err => err);
+
 export const postNewQuestion = (title, description) =>
   axios
     .post(
@@ -43,7 +49,7 @@ export const postNewQuestion = (title, description) =>
 export const postAnswer = (questionId, answer) =>
   axios
     .post(
-      `${urlQuestions}answer/${questionId}`,
+      `${urlQuestions}${questionId}/answer`,
       {
         answer
       },
@@ -55,8 +61,6 @@ export const postAnswer = (questionId, answer) =>
     .catch(err => err);
 //componentdidcatch
 //el catch en los actions
-//componentdidmount en Question.js y actualizar el mismo questionsss en el store
 //hacer REST la api. Ver de poder editar las respuestas para hacerle .put en la api
 //iba a usar un HOC para algo. Para el manejo de errores?
 //similar a statusAgent, si hay un error, que wrappe el component o lo que tiene que mostrar
-

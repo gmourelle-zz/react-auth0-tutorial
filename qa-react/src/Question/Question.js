@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import SubmitAnswer from './SubmitAnswer';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getQuestion } from '../store/reducers/selector';
+import { fetchQuestions } from '../store/actions/questions';
 import { submitAnswer } from '../store/actions/question';
 
 class Question extends Component {
+  componentDidMount() {
+    // const {
+    //   match: { params }
+    // } = this.props;
+    // this.props.fetchQuestion(params.questionId);
+    this.props.fetchQuestions();
+  }
 
-  componentDidMount
   submitAnswer = (questionId, answer) => {
     return this.props.submitAnswer(questionId, answer);
   };
@@ -41,20 +47,14 @@ class Question extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      submitAnswer
-    },
-    dispatch
-  );
-
 const mapStateToProps = (state, props) => ({
-  //question: getQuestion(state, this.props.match.params)
   question: getQuestion(state, props.match.params.questionId)
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    submitAnswer,
+    fetchQuestions
+  }
 )(Question);

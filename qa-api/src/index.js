@@ -6,10 +6,9 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
+const dotenv = require('dotenv');
 
-//aca pones las variables para no hardcodear 
-//la data de Auth0
-dotenv.config()
+dotenv.config();
 // define the Express app
 const app = express();
 
@@ -52,12 +51,12 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://gmourelle.auth0.com/.well-known/jwks.json`
+    jwksUri: process.env.REACT_APP_JWKS_URI
   }),
 
   // Validate the audience and the issuer.
-  audience: 'hYMHgjDeleYsF2et0L94x84w4en6tto9',
-  issuer: `https://gmourelle.auth0.com/`,
+  audience: process.env.REACT_APP_ID,
+  issuer: process.env.REACT_APP_ISSUER,
   algorithms: ['RS256']
 });
 
@@ -76,7 +75,7 @@ app.post('/', checkJwt, (req, res) => {
 });
 
 // insert a new answer to a question
-app.post('/answer/:id', checkJwt, (req, res) => {
+app.post('/:id/answer', checkJwt, (req, res) => {
   const { answer } = req.body;
   const question = questions.filter(q => q.id === parseInt(req.params.id));
   if (question.length > 1) return res.status(500).send();

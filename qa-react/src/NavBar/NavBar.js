@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import auth0Client from '../Auth';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { signOut } from '../store/actions/user';
 
@@ -34,17 +33,11 @@ const NavBar = props => {
   );
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      signOut
-    },
-    dispatch
-  );
-
 export default withRouter(
   connect(
     null,
-    mapDispatchToProps
+    {
+      signOut
+    }
   )(NavBar)
 );

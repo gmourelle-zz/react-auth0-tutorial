@@ -22,7 +22,7 @@ export const questionsReducer = (state = initialState, action) => {
     case Actions.GET_QUESTION_REQUEST:
       return { ...state, fetchingQuestion: true };
     case Actions.GET_QUESTION_SUCCESS:
-      return { ...state, question: action.payload, fetchingQuestion: false };
+      return { ...state, fetchingQuestion: false };
     case Actions.SUBMIT_NEW_QUESTION_SUCCESS:
       return {
         ...state,
@@ -37,7 +37,6 @@ export const questionsReducer = (state = initialState, action) => {
     case Actions.SUBMIT_ANSWER_SUCCESS:
       return {
         ...state,
-        //question: action.payload,
         questions: {
           ...state.questions,
           [action.payload.id]: action.payload

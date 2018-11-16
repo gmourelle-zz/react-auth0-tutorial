@@ -27,13 +27,13 @@ class App extends Component {
       return;
     }
 
-    // try {
-    //    auth0Client.silentAuth();
-    //   this.forceUpdate();
-    // } catch (err) {
-    //   if (err.error === 'login_required') return;
-    //   console.log(err.error);
-    // }
+    try {
+      auth0Client.silentAuth();
+      this.forceUpdate();
+    } catch (err) {
+      if (err.error === 'login_required') return;
+      console.log(err.error);
+    }
 
     this.props.checkingSessionRequest();
   }
@@ -58,7 +58,7 @@ class App extends Component {
     const { checkingSession } = this.props;
 
     return (
-      <Fragment>
+      <div>
         <NavBar />
         <Route exact path="/" component={Questions} />
         <Route exact path="/question/:questionId" component={Question} />
@@ -68,18 +68,10 @@ class App extends Component {
           component={NewQuestion}
           checkingSession={checkingSession}
         />
-      </Fragment>
+      </div>
     );
   }
 }
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      checkingSessionRequest
-    },
-    dispatch
-  );
 
 const mapStateToProps = state => ({
   checkingSession: state.userReducer.checkingSession
@@ -88,7 +80,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { checkingSessionRequest }
   )(App)
 );
-//export default withRouter(App);
