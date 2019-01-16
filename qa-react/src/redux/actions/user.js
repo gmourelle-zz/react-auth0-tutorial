@@ -1,28 +1,29 @@
-import { Actions } from '../constants/actionTypes';
+import { actionTypes } from './actionTypes';
+
 import auth0Client from '../../Auth';
 
 export const signOutSuccess = () => ({
-  type: Actions.CHECKING_SESSION
+  type: actionTypes.CHECKING_SESSION
 });
 export const checkingSessionRequest = () => ({
-  type: Actions.CHECKING_SESSION
+  type: actionTypes.CHECKING_SESSION
 });
 
 export const signOutRequest = () => ({
-  type: Actions.SIGN_OUT_REQUEST
+  type: actionTypes.SIGN_OUT_REQUEST
 });
 
 export const submitNewQuestionRequest = () => ({
-  type: Actions.SUBMIT_NEW_QUESTION_REQUEST
+  type: actionTypes.SUBMIT_NEW_QUESTION_REQUEST
 });
 
 export const submitNewQuestionSuccess = payload => ({
-  type: Actions.CHECKING_SESSION,
+  type: actionTypes.CHECKING_SESSION,
   payload
 });
 
 const getError = payload => ({
-  type: Actions.RAISE_ERROR,
+  type: actionTypes.RAISE_ERROR,
   payload: payload
 });
 

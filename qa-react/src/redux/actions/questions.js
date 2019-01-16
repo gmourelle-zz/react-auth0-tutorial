@@ -1,15 +1,15 @@
-import { Actions } from '../constants/actionTypes';
-import { getQuestions } from './../../services';
+import { actionTypes } from './actionTypes';
+import { getQuestions } from '../../services';
 
 const getQuestionsSuccess = payload => ({
-  type: Actions.GET_QUESTIONS_SUCCESS,
+  type: actionTypes.GET_QUESTIONS_SUCCESS,
   payload
 });
 const getQuestionsRequest = () => ({
-  type: Actions.GET_QUESTIONS_REQUEST
+  type: actionTypes.GET_QUESTIONS_REQUEST
 });
 const getError = payload => ({
-  type: Actions.RAISE_ERROR,
+  type: actionTypes.RAISE_ERROR,
   payload: payload
 });
 

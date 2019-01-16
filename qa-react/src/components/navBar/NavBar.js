@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import auth0Client from '../Auth';
+import auth0Client from '../../Auth';
 import { connect } from 'react-redux';
-import { signOut } from '../store/actions/user';
+import { signOut } from '../../redux/actions';
 
 const NavBar = props => {
   const signOut = () => {
@@ -33,11 +33,12 @@ const NavBar = props => {
   );
 };
 
-export default withRouter(
-  connect(
-    null,
-    {
-      signOut
-    }
-  )(NavBar)
-);
+// export default withRouter(
+//   connect(
+//     null,
+//     {
+//       signOut
+//     }
+//   )(NavBar)
+
+export default withRouter(NavBar);

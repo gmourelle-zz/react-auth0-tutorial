@@ -18,7 +18,7 @@ export const getQuestion = id =>
 export const postNewQuestion = (title, description) =>
   axios
     .post(
-      urlQuestions,
+      'http://localhost:8081',
       {
         title,
         description
@@ -29,22 +29,6 @@ export const postNewQuestion = (title, description) =>
     )
     .then(question_data => question_data.data.question)
     .catch(err => err);
-// return dispatch => {
-//   dispatch(submitAnswerRequest());
-
-//   return fetch(`http://localhost:8081/answer/${questionId}`, {
-//     method: 'POST',
-//     body: JSON.stringify(answer),
-//     headers: new Headers({
-//       'Content-type': 'application/json',
-//       Authorization: `Bearer ${auth0Client.getIdToken()}`
-//     })
-//   })
-//     .then(question_data =>
-//       dispatch(submitAnswerSuccess(question_data.data.question))
-//     )
-//     .catch(err => getError(err));
-// };
 
 export const postAnswer = (questionId, answer) =>
   axios
@@ -59,6 +43,7 @@ export const postAnswer = (questionId, answer) =>
     )
     .then(question_data => question_data.data.question)
     .catch(err => err);
+
 //componentdidcatch
 //el catch en los actions
 //hacer REST la api. Ver de poder editar las respuestas para hacerle .put en la api

@@ -1,3 +1,6 @@
+// export const initialState = {
+//   questions: {}
+// };
 export const initialState = {
-  questions: {}
+  questionsReducer: { questions: {}, fetchingQuestions: false }
 };

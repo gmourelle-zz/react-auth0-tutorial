@@ -1,15 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import NavBar from './NavBar/NavBar';
-import Question from './Question/Question';
-import Questions from './Questions/Questions';
+import {
+  NavBar,
+  Question,
+  Questions,
+  NewQuestion,
+  SecuredRoute
+} from './components';
 import Callback from './Callback';
-import NewQuestion from './NewQuestion/NewQuestion';
-import SecuredRoute from './SecuredRoute/SecuredRoute';
 import auth0Client from './Auth';
-import { checkingSessionRequest } from './store/actions/user';
+///import { checkingSessionRequest } from './redux/actions';
 
 class App extends Component {
   constructor(props) {
@@ -22,10 +23,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.pathname === '/callback') {
-      this.props.checkingSessionRequest();
-      return;
-    }
+    // if (this.props.location.pathname === '/callback') {
+    //   this.props.checkingSessionRequest();
+    //   return;
+    // }
 
     try {
       auth0Client.silentAuth();
@@ -35,7 +36,7 @@ class App extends Component {
       console.log(err.error);
     }
 
-    this.props.checkingSessionRequest();
+    //this.props.checkingSessionRequest();
   }
   // async componentDidMount() {
   //   if (this.props.location.pathname === '/callback') {
@@ -77,9 +78,10 @@ const mapStateToProps = state => ({
   checkingSession: state.userReducer.checkingSession
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { checkingSessionRequest }
-  )(App)
-);
+// export default withRouter(
+//   connect(
+//     mapStateToProps,
+//     { checkingSessionRequest }
+//   )(App)
+// );
+export default withRouter(App);

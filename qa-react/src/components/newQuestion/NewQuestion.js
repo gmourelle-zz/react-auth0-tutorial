@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { submitNewQuestion } from '../store/actions/newQuestion';
+import { submitNewQuestion } from '../../redux/actions';
+import auth0Client from '../../Auth';
 
 class NewQuestion extends Component {
   state = {

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getQuestions } from '../store/reducers/selector';
-import { fetchQuestions } from '../store/actions/questions';
+import { getQuestions } from '../../redux/selectors';
+import { fetchQuestions } from '../../redux/actions';
 
 class Questions extends Component {
   componentDidMount() {

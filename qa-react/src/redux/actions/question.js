@@ -1,23 +1,25 @@
-import { Actions } from '../constants/actionTypes';
-import { postAnswer, getQuestion } from './../../services';
+import { actionTypes } from './actionTypes';
 
-export const getQuestionSuccess = payload => ({
-  type: Actions.GET_QUESTION_SUCCESS
+import { postAnswer, getQuestion } from '../../services';
+
+const getQuestionSuccess = payload => ({
+  type: actionTypes.GET_QUESTION_SUCCESS
 });
-export const getQuestionRequest = () => ({
-  type: Actions.GET_QUESTION_REQUEST
+const getQuestionRequest = () => ({
+  type: actionTypes.GET_QUESTION_REQUEST
 });
 
-export const submitAnswerRequest = () => ({
-  type: Actions.SUBMIT_ANSWER_REQUEST
+const submitAnswerRequest = () => ({
+  type: actionTypes.SUBMIT_ANSWER_REQUEST
 });
+
 const getError = payload => ({
-  type: Actions.RAISE_ERROR,
+  type: actionTypes.RAISE_ERROR,
   payload: payload
 });
 
 export const submitAnswerSuccess = payload => ({
-  type: Actions.SUBMIT_ANSWER_SUCCESS,
+  type: actionTypes.SUBMIT_ANSWER_SUCCESS,
   payload
 });
 

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import SubmitAnswer from './SubmitAnswer';
-import { connect } from 'react-redux';
-import { getQuestion } from '../store/reducers/selector';
-import { fetchQuestions } from '../store/actions/questions';
-import { submitAnswer } from '../store/actions/question';
 
 class Question extends Component {
   componentDidMount() {
@@ -47,14 +43,4 @@ class Question extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  question: getQuestion(state, props.match.params.questionId)
-});
-
-export default connect(
-  mapStateToProps,
-  {
-    submitAnswer,
-    fetchQuestions
-  }
-)(Question);
+export default Question;
