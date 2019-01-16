@@ -61,14 +61,14 @@ const checkJwt = jwt({
 });
 
 // insert a new question
-app.post('/', checkJwt, (req, res) => {
+app.post('/', (req, res) => {
   const { title, description } = req.body;
   const newQuestion = {
     id: questions.length + 1,
     title,
     description,
-    answers: [],
-    author: req.user.nickname
+    answers: []
+    //author: req.user.nickname
   };
   questions.push(newQuestion);
   res.status(200).send({ question: newQuestion });
