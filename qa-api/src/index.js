@@ -51,17 +51,31 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: process.env.REACT_APP_JWKS_URI
+    jwksUri: 'https://gmourelle.auth0.com/.well-known/jwks.json'
   }),
 
   // Validate the audience and the issuer.
-  audience: process.env.REACT_APP_ID,
-  issuer: process.env.REACT_APP_ISSUER,
+  audience: 'hYMHgjDeleYsF2et0L94x84w4en6tto9',
+  issuer: 'https://gmourelle.auth0.com/',
   algorithms: ['RS256']
 });
 
+// const checkJwt = jwt({
+//   secret: jwksRsa.expressJwtSecret({
+//     cache: true,
+//     rateLimit: true,
+//     jwksRequestsPerMinute: 5,
+//     jwksUri: process.env.REACT_APP_JWKS_URI
+//   }),
+
+//   // Validate the audience and the issuer.
+//   audience: process.env.REACT_APP_ID,
+//   issuer: process.env.REACT_APP_ISSUER,
+//   algorithms: ['RS256']
+// });
+
 // insert a new question
-app.post('/', (req, res) => {
+app.post('/', checkJwt, (req, res) => {
   const { title, description } = req.body;
   const newQuestion = {
     id: questions.length + 1,
