@@ -4,15 +4,7 @@ import { rootReducer } from './rootReducer';
 
 const initialState = {
   questionsReducer: {
-    questions: {
-      '1': {
-        id: 1,
-        title: 'How do I make a sandwich?',
-        description:
-          'I am trying very hard, but I do not know how to make a delicious sandwich. Can someone help me?',
-        answers: []
-      }
-    },
+    questions: {},
     fetchingQuestions: false
   },
   userReducer: {

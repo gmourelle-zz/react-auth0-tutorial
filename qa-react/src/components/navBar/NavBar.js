@@ -5,8 +5,12 @@ import { connect } from 'react-redux';
 import { signOut } from '../../redux/actions';
 
 const NavBar = props => {
+  // const signOut = () => {
+  //   props.signOut(props.history);
+  // };
   const signOut = () => {
-    props.signOut(props.history);
+    auth0Client.signOut();
+    props.history.replace('/');
   };
 
   return (

@@ -17,13 +17,12 @@ export const fetchQuestions = () => {
   return dispatch => {
     dispatch(getQuestionsRequest());
 
-    getQuestions().then(
-      question_data => {
+    getQuestions()
+      .then(question_data => {
         dispatch(getQuestionsSuccess(question_data));
-      },
-      error => {
-        dispatch(getError(error));
-      }
-    );
+      })
+      .catch(error => {
+        dispatch(getError(error.message));
+      });
   };
 };

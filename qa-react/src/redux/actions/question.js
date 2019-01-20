@@ -13,7 +13,7 @@ const submitAnswerRequest = () => ({
   type: actionTypes.SUBMIT_ANSWER_REQUEST
 });
 
-const getError = payload => ({
+export const getError = payload => ({
   type: actionTypes.RAISE_ERROR,
   payload: payload
 });
@@ -26,12 +26,11 @@ export const submitAnswerSuccess = payload => ({
 export const submitAnswer = (questionId, answer) => {
   return dispatch => {
     dispatch(submitAnswerRequest());
-    postAnswer(questionId, answer).then(
-      answer_data => dispatch(submitAnswerSuccess(answer_data)),
-      error => {
-        dispatch(getError(error));
-      }
-    );
+    postAnswer(questionId, answer)
+      .then(answer_data => dispatch(submitAnswerSuccess(answer_data)))
+      .catch(error => {
+        dispatch(getError(error.message));
+      });
   };
 };
 

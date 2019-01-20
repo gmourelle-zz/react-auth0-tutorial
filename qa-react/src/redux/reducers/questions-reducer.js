@@ -12,7 +12,8 @@ export const questionsReducer = (state = {}, action) => {
       return {
         ...state,
         questions: questions,
-        fetchingQuestions: false
+        fetchingQuestions: false,
+        error: undefined
       };
     case actionTypes.GET_QUESTION_REQUEST:
       return { ...state, fetchingQuestion: true };
@@ -43,7 +44,7 @@ export const questionsReducer = (state = {}, action) => {
     case actionTypes.SIGN_OUT_SUCCESS:
       return { ...state, loggedIn: false };
     case actionTypes.RAISE_ERROR:
-      return { ...state, error: action.payload.error };
+      return { ...state, error: action.payload, fetchingQuestions: false };
     default:
       return state;
   }

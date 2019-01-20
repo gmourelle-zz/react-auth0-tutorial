@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -6,82 +6,85 @@ import {
   Question,
   Questions,
   NewQuestion,
-  SecuredRoute
+  SecuredRoute,
+  ErrorBoundary
 } from './components';
 import Callback from './Callback';
 import auth0Client from './Auth';
-///import { checkingSessionRequest } from './redux/actions';
+import { raiseError } from './redux/actions';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   checkingSession: true
-    // };
+    this.state = {
+      checkingSession: true
+    };
 
     //checkingSession que lo reciba por prop?
   }
 
-  componentDidMount() {
-    // if (this.props.location.pathname === '/callback') {
-    //   this.props.checkingSessionRequest();
-    //   return;
-    // }
-
-    try {
-      auth0Client.silentAuth();
-      this.forceUpdate();
-    } catch (err) {
-      if (err.error === 'login_required') return;
-      console.log(err.error);
-    }
-
-    //this.props.checkingSessionRequest();
-  }
-  // async componentDidMount() {
+  // componentDidMount() {
   //   if (this.props.location.pathname === '/callback') {
-  //     this.setState({ checkingSession: false });
+  //     this.props.checkingSessionRequest();
   //     return;
   //   }
 
   //   try {
-  //     await auth0Client.silentAuth();
+  //     auth0Client.silentAuth();
   //     this.forceUpdate();
   //   } catch (err) {
   //     if (err.error === 'login_required') return;
   //     console.log(err.error);
   //   }
 
-  //   this.setState({ checkingSession: false });
+  //   this.props.checkingSessionRequest();
   // }
+  async componentDidMount() {
+    if (this.props.location.pathname === '/callback') {
+      this.setState({ checkingSession: false });
+      return;
+    }
+
+    try {
+      await auth0Client.silentAuth();
+      this.forceUpdate();
+    } catch (err) {
+      if (err.error === 'login_required') return;
+      console.log(err.error);
+    }
+
+    this.setState({ checkingSession: false });
+  }
 
   render() {
-    const { checkingSession } = this.props;
+    const { error, raiseError } = this.props;
+    const { checkingSession } = this.state;
 
     return (
-      <div>
+      <Fragment>
         <NavBar />
         <Route exact path="/" component={Questions} />
-        <Route exact path="/question/:questionId" component={Question} />
-        <Route exact path="/callback" component={Callback} />
-        <SecuredRoute
-          path="/new-question"
-          component={NewQuestion}
-          checkingSession={checkingSession}
-        />
-      </div>
+        <ErrorBoundary error={error} raiseError={raiseError}>
+          <Route exact path="/question/:questionId" component={Question} />
+          <Route exact path="/callback" component={Callback} />
+          <SecuredRoute
+            path="/new-question"
+            component={NewQuestion}
+            checkingSession={checkingSession}
+          />
+        </ErrorBoundary>
+      </Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  error: state.questionsReducer.error,
   checkingSession: state.userReducer.checkingSession
 });
-
-// export default withRouter(
-//   connect(
-//     mapStateToProps,
-//     { checkingSessionRequest }
-//   )(App)
-// );
-export default withRouter(App);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { raiseError }
+  )(App)
+);
